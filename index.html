@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html data-ng-app="movieApp">
+  <head>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- angular -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+
+    <!-- custom script (angular app) -->
+    <script type="text/javascript" src="app.js"></script>
+
+  </head>
+  <body ng-controller="MovieCtrl as movies" data-ng-style="movies.style">
+
+    <div ng-if="movies.moviesToWatch.length > 0">
+           <hr>
+           <div class="panel panel-default">
+             <div class="panel-heading">
+               <h3 class="panel-title">
+                 {{movies.moviesToWatch.length}} <spandata-ng-pluralize count="movies.moviesToWatch.length" when="{'1': 'Movie', 'other': 'Movies'}"></span> to Watch
+               </h3>
+             </div>
+             <br>
+             <span>Search Movie:</span>
+                <input type="text" ng-model="searchMovies">
+
+                  <div ng-repeat="movie in movies.moviesToWatch | orderBy:'nDex' | filter:searchMovies">
+                      <p>{{movie.title}}</p>
+                    </div>
+
+
+
+             <br>
+             <form ng-submit="movies.addMovie()">
+               <div class="form-group">
+                 <label for="movie-title">Movie Title</label>
+                  <input type="text" ng-model="movies.movie.title" class="form-control" placeholder="What do you want to watch?" autofocus>
+                  <input type="text" ng-model="movies.movie.image" class="form-control" placeholder="image URL" autofocus>
+                </div>
+                <input type="submit" value="Add Movie" class="btn btn-default">
+              </form>
+
+             <div ng-repeat="movie in movies.moviesToWatch">
+               <hr>
+               <p> Movie Name: {{movie.title}} <button ng-click="movies.deleteMovie(movie)" type="button" name="DELETE">X</button></p>
+               <p> Movie Pic: <img src="{{movie.image}}" alt="{{movie.title}}" height="100" width="100"></p>
+             </div>
+
+
+
+</body>
+</html>
